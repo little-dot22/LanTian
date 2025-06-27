@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蓝天高考志愿辅助填报系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>蓝天高考志愿辅助填报系统</h1>
+        </header>
+        
+        <!-- 输入区域 -->
+        <section class="input-section">
+            <div class="input-group">
+                <label for="score">高考分数:</label>
+                <input type="number" id="score" placeholder="请输入高考分数">
+            </div>
+            
+            <div class="input-group">
+                <label for="subject">科目:</label>
+                <select id="subject">
+                    <option value="physics">物理</option>
+                    <option value="history">历史</option>
+                    <option value="comprehensive">综合</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="batch">批次:</label>
+                <select id="batch">
+                    <option value="batch1">本科一批</option>
+                    <option value="batch2">本科二批</option>
+                    <option value="special">专科批</option>
+                </select>
+            </div>
+            
+            <button id="query-btn" class="btn primary">查询排名</button>
+        </section>
+        
+        <!-- 排名结果显示 -->
+        <section class="rank-section">
+            <div class="rank-info">
+                <span>您的排名: <strong id="rank-result">--</strong> 名</span>
+            </div>
+            
+            <div class="range-controls">
+                <div class="range-group">
+                    <label for="range-up">向前浮动:</label>
+                    <input type="number" id="range-up" value="5000" min="0">
+                    <span>名</span>
+                </div>
+                
+                <div class="range-group">
+                    <label for="range-down">向后浮动:</label>
+                    <input type="number" id="range-down" value="2000" min="0">
+                    <span>名</span>
+                </div>
+            </div>
+            
+            <div class="search-fields">
+                <div class="input-group">
+                    <label for="search-school">学校名称:</label>
+                    <input type="text" id="search-school" placeholder="可选">
+                </div>
+                
+                <div class="input-group">
+                    <label for="major-select">专业名称:</label>
+                    <div class="custom-multiselect">
+                        <div class="select-box" onclick="toggleDropdown()">
+                            <span class="selected-text">请选择专业</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="dropdown-content" id="major-dropdown">
+                            <div class="search-box">
+                                <input type="text" placeholder="搜索专业..." id="major-search">
+                            </div>
+                            <div class="options-container" id="major-options">
+                                <!-- 选项将通过JS动态加载 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="filter-btn" class="btn secondary">筛选学校</button>
+            </div>
+        </section>
+        
+        <!-- 主内容区 - 选项卡 -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1">筛选结果</button>
+            <button class="tab-btn" data-tab="tab2">志愿清单(<span id="wishlist-count">0</span>/200)</button>
+            <button class="tab-btn" data-tab="tab3">最终志愿(<span id="final-count">0</span>/96)</button>
+        </div>
+        
+        <div class="tab-content">
+            <!-- 筛选结果表格 -->
+            <div id="tab1" class="tab-pane active">
+                <div class="table-container">
+                    <table id="result-table">
+                        <thead>
+                            <tr>
+                                <th>院校名称</th>
+                                <th>专业名称</th>
+                                <th>平均名次</th>
+                                <th>2024名次</th>
+                                <th>2023名次</th>
+                                <th>2022名次</th>
+                                <th>学制</th>
+                                <th>学费</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 数据将通过JS动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 志愿清单 -->
+            <div id="tab2" class="tab-pane">
+                <div class="wishlist-actions">
+                    <button id="clear-wishlist-btn" class="btn danger">清空清单</button>
+                </div>
+                <div class="table-container">
+                    <table id="wishlist-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>院校名称</th>
+                                <th>专业名称</th>
+                                <th>平均名次</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 数据将通过JS动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 最终志愿 -->
+            <div id="tab3" class="tab-pane">
+                <div class="final-actions">
+                    <button id="adjust-order-btn" class="btn secondary">调整顺序</button>
+                    <button id="export-btn" class="btn success">导出志愿表</button>
+                </div>
+                <div class="table-container">
+                    <table id="final-table">
+                        <thead>
+                            <tr>
+                                <th>志愿序号</th>
+                                <th>院校名称</th>
+                                <th>专业名称</th>
+                                <th>平均名次</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 数据将通过JS动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
